@@ -1,3 +1,16 @@
+<?php
+session_start();
+
+$dsn = "mysql:host=mysql; port=3306; dbname=videgrenierenligne";
+$pdo = new PDO($dsn, "root", "rootpass");
+
+$sql = 'SELECT * FROM articles';
+$sth = $pdo->prepare($sql);
+$sth->execute();
+$articles = $sth->fetchAll();
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,8 +22,12 @@
 </head>
 
 <body>
-    <h1> Coucou</h1>
-    <p>j apprend à faire du CI/CD</p>
+    <?php foreach ($articles as $article) { ?>
+        <h1> <?= $article['name'] ?> </h1>
+        <p> <?= $article['description'] ?> </p>
+    <?php
+    }
+    ?>
 
 </body>
 
